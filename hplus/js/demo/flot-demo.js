@@ -30,22 +30,143 @@ $(function() {
         // console.log(gpu_data)
         // console.log(memory_data)
 
-        $.plot($("#flot-line-chart-multi"), [{
+        $.plot($("#flot-line-chart-fps"), [{
 
-            data: cpu_data,
-            label: "cpu"
-        }, {
-            data: memory_data,
-            label: "memory",
-            yaxis: 2
-        }, {
             data: fps_data,
             label: "fps",
             yaxis: 3
-        }, {
+        }], {
+            xaxes: [{
+                mode: 'time'
+            }],
+            yaxes: [{
+                min: 0
+            }, {
+                // align if we are to the right
+                alignTicksWithAxis: position === "right" ? 1 : null,
+                position: position,
+                tickFormatter: euroFormatter
+            }],
+            legend: {
+                position: 'sw'
+            },
+            xaxis: {
+                mode: "time",
+                timeformat: "%H:%M:%S"
+            },
+            colors: ["#1ab394"],
+            grid: {
+                color: "#999999",
+                clickable: true,
+                tickColor: "#D4D4D4",
+                borderWidth:0,
+                hoverable: true //IMPORTANT! this is needed for tooltip to work,
+
+            },
+            tooltip: true,
+            tooltipOpts: {
+                content: "%s %x 为 %y",
+                xDateFormat: "%H:%M:%S",
+
+                onHover: function(flotItem, $tooltipEl) {
+                    // console.log(flotItem, $tooltipEl);
+                }
+            }
+
+        });
+
+        $.plot($("#flot-line-chart-cpu"), [{
+
+            data: cpu_data,
+            label: "cpu"
+        }], {
+            xaxes: [{
+                mode: 'time'
+            }],
+            yaxes: [{
+                min: 0
+            }, {
+                // align if we are to the right
+                alignTicksWithAxis: position === "right" ? 1 : null,
+                position: position,
+                tickFormatter: euroFormatter
+            }],
+            legend: {
+                position: 'sw'
+            },
+            xaxis: {
+                mode: "time",
+                timeformat: "%H:%M:%S"
+            },
+            colors: ["#1ab394"],
+            grid: {
+                color: "#999999",
+                clickable: true,
+                tickColor: "#D4D4D4",
+                borderWidth:0,
+                hoverable: true //IMPORTANT! this is needed for tooltip to work,
+
+            },
+            tooltip: true,
+            tooltipOpts: {
+                content: "%s %x 为 %y",
+                xDateFormat: "%H:%M:%S",
+
+                onHover: function(flotItem, $tooltipEl) {
+                    // console.log(flotItem, $tooltipEl);
+                }
+            }
+
+        });
+
+        $.plot($("#flot-line-chart-gpu"), [{
+
             data: gpu_data,
-            label: "gpu",
-            yaxis: 4
+            label: "gpu"
+        }], {
+            xaxes: [{
+                mode: 'time'
+            }],
+            yaxes: [{
+                min: 0
+            }, {
+                // align if we are to the right
+                alignTicksWithAxis: position === "right" ? 1 : null,
+                position: position,
+                tickFormatter: euroFormatter
+            }],
+            legend: {
+                position: 'sw'
+            },
+            xaxis: {
+                mode: "time",
+                timeformat: "%H:%M:%S"
+            },
+            colors: ["#1ab394"],
+            grid: {
+                color: "#999999",
+                clickable: true,
+                tickColor: "#D4D4D4",
+                borderWidth:0,
+                hoverable: true //IMPORTANT! this is needed for tooltip to work,
+
+            },
+            tooltip: true,
+            tooltipOpts: {
+                content: "%s %x 为 %y",
+                xDateFormat: "%H:%M:%S",
+
+                onHover: function(flotItem, $tooltipEl) {
+                    // console.log(flotItem, $tooltipEl);
+                }
+            }
+
+        });
+
+        $.plot($("#flot-line-chart-memory"), [{
+
+            data: memory_data,
+            label: "memory"
         }], {
             xaxes: [{
                 mode: 'time'
