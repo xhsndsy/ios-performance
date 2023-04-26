@@ -36,14 +36,14 @@ cpuTime = []
 networkData = []
 networkTime = []
 
-
+# 将dict数据存储到字典里
 def getList(getdata:list ,outdata:list, datetime, value='value'):
     for res in getdata:
         outdata.append(res[value])
         datetime.append(res['timestamp'])
 
 
-
+# 时间戳格式化为时间
 def exTimestamp(timestamp:list) -> list:
     res = []
     for tm in timestamp:
@@ -52,12 +52,15 @@ def exTimestamp(timestamp:list) -> list:
         res.append(otherStyleTime)
     return res
 
+
+# 把抓取到的性能数据写入文件
 def writePerfData(path, data:dict, value='value'):
     with open(path, mode='a') as filename:
         filename.write("%s, %s"%(data[value], data['timestamp']))
         filename.write('\n')
 
 
+# 性能数据的回调获取
 def callback(_type: tidevice.DataType, value: dict):
     print(_type.value, value)
     if _type.value == 'memory':
@@ -76,7 +79,7 @@ def callback(_type: tidevice.DataType, value: dict):
 
 # 包名
 perf.start("com.netflix.NGP.SamuraiShowdownNETFLIX", callback=callback)
-time.sleep(1000)
+time.sleep(3000)
 perf.stop()
 
 
@@ -98,7 +101,7 @@ line_style = ['-', '-', '-', '-']
 y_labels = ["cpu Usage", "gpu Sys", "fps", "memory Usage"]
 
 
-
+# 画图
 y_data = [cpuData, gpuData, fpsData, memoryData]
 x_data = [exTimestamp(cpuTime), exTimestamp(gpuTime), exTimestamp(fpsTime), exTimestamp(memoryTime)]
 for i in range(4):
