@@ -26,41 +26,41 @@ def perfDara():
     with open('./static/cpu.txt', 'r') as f:
         lines = f.readlines()
         for line in lines:
-            tmpstr = line[:-2]
+            tmpstr = line[:-1]
             res = tmpstr.split(', ')
             res = list(map(int, map(float, res)))
             res.reverse()
             cpu_data.append(res)
-        print(cpu_data)
+        # print(cpu_data)
     with open('./static/gpu.txt', 'r') as f:
         lines = f.readlines()
         for line in lines:
-            tmpstr = line[:-2]
+            tmpstr = line[:-1]
             res = tmpstr.split(', ')
             res = list(map(int, map(float, res)))
             res.reverse()
             gpu_data.append(res)
-        print(gpu_data)
+        # print(gpu_data)
 
     with open('./static/fps.txt', 'r') as f:
         lines = f.readlines()
         for line in lines:
-            tmpstr = line[:-2]
+            tmpstr = line[:-1]
             res = tmpstr.split(', ')
             res = list(map(int, map(float, res)))
             res.reverse()
             fps_data.append(res)
-        print(fps_data)
+        # print(fps_data)
 
     with open('./static/memory.txt', 'r') as f:
         lines = f.readlines()
         for line in lines:
-            tmpstr = line[:-2]
+            tmpstr = line[:-1]
             res = tmpstr.split(', ')
             res = list(map(int, map(float, res)))
             res.reverse()
             memory_data.append(res)
-        print(memory_data)
+        # print(memory_data)
 
     return jsonify({
         "cpu_data" : cpu_data,
