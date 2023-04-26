@@ -24,11 +24,11 @@ $(function() {
 
     function doPlot(position) {
 
-        console.log(res)
-        console.log(cpu_data)
-        console.log(fps_data)
-        console.log(gpu_data)
-        console.log(memory_data)
+        // console.log(res)
+        // console.log(cpu_data)
+        // console.log(fps_data)
+        // console.log(gpu_data)
+        // console.log(memory_data)
 
         $.plot($("#flot-line-chart-multi"), [{
 
@@ -61,6 +61,10 @@ $(function() {
             legend: {
                 position: 'sw'
             },
+            xaxis: {
+                mode: "time",
+                timeformat: "%H:%M:%S"
+            },
             colors: ["#1ab394"],
             grid: {
                 color: "#999999",
@@ -72,11 +76,11 @@ $(function() {
             },
             tooltip: true,
             tooltipOpts: {
-                content: "%s  %y",
-                xDateFormat: "%y:%0m:%0d",
+                content: "%s %x 为 %y",
+                xDateFormat: "%H:%M:%S",
 
                 onHover: function(flotItem, $tooltipEl) {
-                    console.log(flotItem, $tooltipEl);
+                    // console.log(flotItem, $tooltipEl);
                 }
             }
 
