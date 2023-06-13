@@ -1,7 +1,7 @@
 
 
 
-var res = $.ajax('http://127.0.0.1:5000/perfdata',
+var res = $.ajax('http://xhsndsy.top/perfdata',
     {
         dataType: 'json',
         success: function (msg) {
