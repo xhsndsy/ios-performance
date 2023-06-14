@@ -1,6 +1,7 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask import render_template
 from flask_cors import CORS
+from werkzeug.utils import secure_filename
 
 
 app = Flask(__name__)
@@ -16,7 +17,7 @@ CORS(app, resources=r'/*')
 
 
 @app.route("/perfdata", methods=["GET", "POST"])
-def perfDara():
+def perfData():
     cpu_data = []
     gpu_data = []
     fps_data = []
@@ -68,6 +69,14 @@ def perfDara():
         "fps_data" : fps_data,
         "memory_data" : memory_data
     })
+
+@app.route("/upload", methods=["POST"])
+def uploadData():
+    file = request.files['file']
+    # print(file)
+    file.save('./static/' + secure_filename(file.filename))
+    return jsonify('OK')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
