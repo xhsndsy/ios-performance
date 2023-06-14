@@ -1,4 +1,5 @@
 import time
+import requests
 import tidevice
 from tidevice._perf import DataType
 import pandas as pd
@@ -60,6 +61,13 @@ def writePerfData(path, data:dict, value='value'):
         filename.write('\n')
 
 
+# python连接远程服务器，发送文件
+def uploadData(url, file_path):
+    data = {'file': open(file_path, 'rb')}
+    respoonse = requests.post(url, files=data)
+    print(respoonse.status_code)
+
+
 # 性能数据的回调获取
 def callback(_type: tidevice.DataType, value: dict):
     print(_type.value, value)
@@ -77,18 +85,25 @@ def callback(_type: tidevice.DataType, value: dict):
         writePerfData('./static/gpu.txt', value)
 
 
-# 包名
+# 在这里修改需要跑的包名以及性能数据
 perf.start("com.netflix.NGP.SamuraiShowdownNETFLIX", callback=callback)
 time.sleep(3000)
 perf.stop()
 
 
 print(memory_list, cpu_list, fps_list, gpu_list)
-
+# 格式化写入文件
 getList(memory_list, memoryData, memoryTime)
 getList(cpu_list, cpuData, cpuTime, 'sys_value')
 getList(gpu_list, gpuData, gpuTime)
 getList(fps_list, fpsData, fpsTime)
+
+# 将性能测试数据发送至服务器
+url = 'http://xhsndsy.top/upload'
+for path in os.listdir('./static'):
+    file_path = './static/' + path
+    uploadData(url, file_path)
+
 
 #se
 # print(cpuData)
@@ -117,5 +132,5 @@ for i in range(4):
     fig.autofmt_xdate()
 
     plt.savefig(y_labels[i]+".png",dpi=300)
-    plt.show()
+    # plt.show()
 
