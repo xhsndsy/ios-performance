@@ -5,14 +5,26 @@ from tidevice._perf import DataType
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
+import config
+from utils import getPackageName
 
-file = open('./static/cpu.txt', 'w', encoding='utf-8')
+# 获取包名的新建文件夹
+
+
+
+packname = getPackageName()
+
+if packname not in os.listdir('./static'):
+    os.mkdir('./static/' + packname)
+
+
+file = open('./static/'+ packname +'/cpu.txt', 'w', encoding='utf-8')
 file.close()
-file = open('./static/fps.txt', 'w', encoding='utf-8')
+file = open('./static/'+ packname +'/fps.txt', 'w', encoding='utf-8')
 file.close()
-file = open('./static/gpu.txt', 'w', encoding='utf-8')
+file = open('./static/'+ packname +'/gpu.txt', 'w', encoding='utf-8')
 file.close()
-file = open('./static/memory.txt', 'w', encoding='utf-8')
+file = open('./static/'+ packname +'/memory.txt', 'w', encoding='utf-8')
 file.close()
 
 t = tidevice.Device()
@@ -36,6 +48,7 @@ cpuData = []
 cpuTime = []
 networkData = []
 networkTime = []
+
 
 # 将dict数据存储到字典里
 def getList(getdata:list ,outdata:list, datetime, value='value'):
@@ -64,8 +77,8 @@ def writePerfData(path, data:dict, value='value'):
 # python连接远程服务器，发送文件
 def uploadData(url, file_path):
     data = {'file': open(file_path, 'rb')}
-    respoonse = requests.post(url, files=data)
-    print(respoonse.status_code)
+    response = requests.post(url, files=data)
+    print(response.status_code)
 
 
 # 性能数据的回调获取
@@ -73,21 +86,21 @@ def callback(_type: tidevice.DataType, value: dict):
     print(_type.value, value)
     if _type.value == 'memory':
         memory_list.append(value)
-        writePerfData('./static/memory.txt', value)
+        writePerfData('./static/'+ packname +'/memory.txt', value)
     if _type.value == "cpu":
         cpu_list.append(value)
-        writePerfData('./static/cpu.txt', value, value='sys_value')
+        writePerfData('./static/'+ packname +'/cpu.txt', value, value='sys_value')
     if _type.value == "fps":
         fps_list.append(value)
-        writePerfData('./static/fps.txt', value)
+        writePerfData('./static/'+ packname +'/fps.txt', value)
     if _type.value == "gpu":
         gpu_list.append(value)
-        writePerfData('./static/gpu.txt', value)
+        writePerfData('./static/'+ packname +'/gpu.txt', value)
 
 
 # 在这里修改需要跑的包名以及性能数据
-perf.start("com.netflix.NGP.SamuraiShowdownNETFLIX", callback=callback)
-time.sleep(3000)
+perf.start(config.PackageName, callback=callback)
+time.sleep(config.perfTime)
 perf.stop()
 
 
@@ -98,12 +111,12 @@ getList(cpu_list, cpuData, cpuTime, 'sys_value')
 getList(gpu_list, gpuData, gpuTime)
 getList(fps_list, fpsData, fpsTime)
 
-# 将性能测试数据发送至服务器
-url = 'http://xhsndsy.top/upload'
-for path in os.listdir('./static'):
-    file_path = './static/' + path
-    uploadData(url, file_path)
-
+# # 将性能测试数据发送至服务器
+# url = 'http://xhsndsy.top/upload'
+# for path in os.listdir('./static'):
+#     file_path = './static/' + path
+#     uploadData(url, file_path)
+#
 
 #se
 # print(cpuData)
