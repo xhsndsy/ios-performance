@@ -1,4 +1,4 @@
-var res = $.ajax('http://127.0.0.1:5000/perfdata?department=None',
+var res = $.ajax('http://xhsndsy.top/perfdata?department=None',
     {
         dataType: 'json',
         success: function (msg) {
@@ -228,7 +228,7 @@ $(function() {
 $("#SamuraiShowdownNETFLIX").click(function ()
 {
     // location.reload(true)
-    $.ajax('http://127.0.0.1:5000/perfdata?department=SamuraiShowdownNETFLIX',
+    $.ajax('http://xhsndsy.top/perfdata?department=SamuraiShowdownNETFLIX',
         {
             dataType: 'json',
             success: function (msg) {
@@ -449,7 +449,7 @@ $("#SamuraiShowdownNETFLIX").click(function ()
 $("#warriors").click(function ()
 {
     // location.reload(true)
-    $.ajax('http://127.0.0.1:5000/perfdata?department=warriors',
+    $.ajax('http://xhsndsy.top/perfdata?department=warriors',
         {
             dataType: 'json',
             success: function (msg) {
