@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask import render_template
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
+from utils import getPerfData, getPackageName
 
 
 app = Flask(__name__)
@@ -23,45 +24,12 @@ def perfData():
     fps_data = []
     memory_data = []
 
+    pakname = request.values.get('department')
 
-    with open('./static/cpu.txt', 'r') as f:
-        lines = f.readlines()
-        for line in lines:
-            tmpstr = line[:-1]
-            res = tmpstr.split(', ')
-            res = list(map(int, map(float, res)))
-            res.reverse()
-            cpu_data.append(res)
-        # print(cpu_data)
-    with open('./static/gpu.txt', 'r') as f:
-        lines = f.readlines()
-        for line in lines:
-            tmpstr = line[:-1]
-            res = tmpstr.split(', ')
-            res = list(map(int, map(float, res)))
-            res.reverse()
-            gpu_data.append(res)
-        # print(gpu_data)
-
-    with open('./static/fps.txt', 'r') as f:
-        lines = f.readlines()
-        for line in lines:
-            tmpstr = line[:-1]
-            res = tmpstr.split(', ')
-            res = list(map(int, map(float, res)))
-            res.reverse()
-            fps_data.append(res)
-        # print(fps_data)
-
-    with open('./static/memory.txt', 'r') as f:
-        lines = f.readlines()
-        for line in lines:
-            tmpstr = line[:-1]
-            res = tmpstr.split(', ')
-            res = list(map(int, map(float, res)))
-            res.reverse()
-            memory_data.append(res)
-        # print(memory_data)
+    if pakname is None:
+        cpu_data, gpu_data, fps_data, memory_data = getPerfData('./static/')
+    else:
+        cpu_data, gpu_data, fps_data, memory_data = getPerfData('./static/' + pakname)
 
     return jsonify({
         "cpu_data" : cpu_data,
@@ -69,6 +37,7 @@ def perfData():
         "fps_data" : fps_data,
         "memory_data" : memory_data
     })
+
 
 @app.route("/upload", methods=["POST"])
 def uploadData():
