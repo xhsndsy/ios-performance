@@ -1,3 +1,5 @@
+import logging
+
 from flask import Flask, jsonify, request
 from flask import render_template
 from flask_cors import CORS
@@ -26,11 +28,10 @@ def perfData():
 
     pakname = request.values.get('department')
 
-    if pakname is None:
-        cpu_data, gpu_data, fps_data, memory_data = getPerfData('./static/')
-    else:
+    try:
         cpu_data, gpu_data, fps_data, memory_data = getPerfData('./static/' + pakname)
-
+    except:
+        print('has no department')
     return jsonify({
         "cpu_data" : cpu_data,
         "gpu_data" : gpu_data,
