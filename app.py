@@ -31,7 +31,7 @@ def perfData():
     try:
         cpu_data, gpu_data, fps_data, memory_data = getPerfData('./static/' + pakname)
     except:
-        print('has no department')
+        print('this request has no department')
     return jsonify({
         "cpu_data" : cpu_data,
         "gpu_data" : gpu_data,
