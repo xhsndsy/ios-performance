@@ -1,4 +1,4 @@
-var res = $.ajax('http://127.0.0.1:5000/perfdata',
+var res = $.ajax('http://127.0.0.1:5000/perfdata?department=None',
     {
         dataType: 'json',
         success: function (msg) {
@@ -205,6 +205,10 @@ $(function() {
     }
 
     doPlot("right");
+
+    $("button").click(function () {
+                        doPlot($(this).text());
+                    });
 
     $("#SamuraiShowdownNETFLIX").click(function() {
         doPlot($(this).text());
