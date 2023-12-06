@@ -1,7 +1,7 @@
 # ios-
 主要是针对某个app进行性能测试，会生成图示。也可以启动服务让性能测试的数据展示在web页面内，动态显示结果。
 
-Mac 有 xcode的instrument去进行性能测试，所以这个脚本仅仅针对于一些需求Wino用户的小伙伴进行iosApp的性能测试
+Mac 有 xcode的instrument去进行性能测试，所以这个脚本仅仅针对于一些需求Windows用户的小伙伴进行iosApp的性能测试
 
 首先需要配置 81 行 - 83 行
     
